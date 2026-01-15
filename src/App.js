@@ -1,7 +1,7 @@
 import './App.css';
 
 import { useState } from 'react';
-import { evaluate} from 'react';
+import { evaluate} from 'mathjs';
 
 import Boton from './component/Boton';
 import BotonClear from './component/BotonClear';
@@ -21,21 +21,31 @@ function App() {
   }
 
   // funcion para calcular el resultado de la operación
-  const calcularResultado = () =>  {
-    if (input){
-      establecerInput(evaluate(input));
-    } else { // si no existe valores
-      alert("Por favor ingrese valores para realizar los cálculos.")
+  const calcularResultado = () => {
+    const operadores = /[+\-*/]/;
+    const partes = input.split(operadores);
+
+    // comprobamos que la operación esté completa y válida
+    if (
+      !operadores.test(input) ||
+      partes.some(p => p.trim() === "")
+    ) return;
+
+    // si la operación bypasea las condiciones del if y falla, captamos la excepcion
+    try {
+      establecerInput(String(evaluate(input)));
+    } catch (e) {
+      alert("Operación inválida, y eso que es difícil chaval...");
     }
   };
+
 
   // esto es lo que devuelve el componente App
   return (
     
     <div className="App">
-      
-      <div className='titulo-alcadox'>
-        <h2>By: alcadox</h2>
+      <div className='contenedor-creditos'>
+        By: alcadox
       </div>
       <div className='contenedor-calculadora'>
         <Pantalla input={input}/>
@@ -65,7 +75,7 @@ function App() {
         </div>
         <div className='fila'>
           <BotonClear manejarClear={() => establecerInput('')}>
-            Clear
+            Borrar
           </BotonClear>
         </div>
       </div>

@@ -5,7 +5,7 @@
   font-size: 1.6em;
   display: flex;
   flex: 1;
-  background-color: #ac0246;
+  background-color: #790030;
   margin-top: 8px;
   justify-content: center;
   align-items: center;
@@ -18,5 +18,5 @@
 }
 
 .boton-clear:hover {
-  background-color: #ebb000;
+  background-color: #ff0066;
 }
